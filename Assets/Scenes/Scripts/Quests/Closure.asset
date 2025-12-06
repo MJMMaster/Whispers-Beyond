@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e039852adb576ad479a9e83c7fd37885, type: 3}
+  m_Name: Closure
+  m_EditorClassIdentifier: 
+  questName: The child
+  description: this ghosts wants you to talk with their child hwo is now an adult
+  questType: 1
+  moralityImpact: 3
+  requiredItemID: 
+  requiredNPCID: npc_1
+  moralityKillPerson: -10
+  moralityKillAnimal: -5
+  moralityRefuse: 2

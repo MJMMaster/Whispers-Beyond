@@ -5,9 +5,12 @@ public class DialogueUIManager : MonoBehaviour
 {
     public static DialogueUIManager Instance;
 
-    public GameObject dialoguePanel;          // Enable/Disable
-    public TextMeshProUGUI speakerNameText;   // Text component for who's speaking
-    public TextMeshProUGUI dialogueText;      // Text component for the dialogue
+    public GameObject dialoguePanel;
+    public TextMeshProUGUI speakerNameText;
+    public TextMeshProUGUI dialogueText;
+
+    public bool IsDialogueActive { get; private set; }
+    public static bool InputBlocked { get; private set; }
 
     private void Awake()
     {
@@ -15,25 +18,33 @@ public class DialogueUIManager : MonoBehaviour
         else Destroy(gameObject);
 
         dialoguePanel.SetActive(false);
+        IsDialogueActive = false;
+        InputBlocked = false;
     }
 
-    /// <summary>
-    /// Show dialogue with speaker name and text
-    /// </summary>
-    public void Show(string speakerName, string text)
+    // -----------------------------
+    // SINGLE CLEAN SHOW FUNCTION
+    // -----------------------------
+    public void Show(string speakerName, string text, bool blockInput = true)
     {
         dialoguePanel.SetActive(true);
+        IsDialogueActive = true;
 
-        if (speakerNameText != null)
-            speakerNameText.text = speakerName;
+        if (speakerNameText) speakerNameText.text = speakerName;
+        if (dialogueText) dialogueText.text = text;
 
-        if (dialogueText != null)
-            dialogueText.text = text;
-        Debug.Log("Showing dialogue: " + speakerName + " - " + text);
+        if (blockInput)
+            InputBlocked = true;
     }
 
+    // -----------------------------
+    // SINGLE CLEAN HIDE FUNCTION
+    // -----------------------------
     public void Hide()
     {
         dialoguePanel.SetActive(false);
+
+        IsDialogueActive = false;
+        InputBlocked = false;
     }
 }

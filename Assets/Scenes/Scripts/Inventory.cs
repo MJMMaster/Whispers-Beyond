@@ -15,7 +15,7 @@ public class Inventory : MonoBehaviour
     public void AddItem(string itemID)
     {
         items.Add(itemID);
-        Debug.Log("Added to inventory: " + itemID);
+        Debug.Log("Added: " + itemID);
     }
 
     public bool HasItem(string itemID)
@@ -28,7 +28,7 @@ public class Inventory : MonoBehaviour
         if (items.Contains(itemID))
         {
             items.Remove(itemID);
-            Debug.Log("Removed from inventory: " + itemID);
+            Debug.Log("Removed: " + itemID);
         }
     }
 }

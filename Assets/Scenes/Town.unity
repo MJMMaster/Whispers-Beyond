@@ -128,6 +128,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5495434684786936304, guid: d3f8e5b1000bf1b4fa975d65e9761405, type: 3}
+      propertyPath: itemID
+      value: Locket
+      objectReference: {fileID: 0}
+    - target: {fileID: 5495434684786936304, guid: d3f8e5b1000bf1b4fa975d65e9761405, type: 3}
       propertyPath: itemPrefab
       value: 
       objectReference: {fileID: 221555769}
@@ -207,8 +211,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5724e19dd1c9a984d966cd5681d5f6c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcName: NPC
-  npcID: npc_1
+  npcName: Jenna
+--- !u!114 &343210525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 343210515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03fc0f0778f97f744bacf40d7d2200c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghostName: Jenna
+  openingLine: Hello there, do you believe that spirits may still walk among us?
+    Isn't that interesting?
+  option1Text: I do believe that
+  option1Response: i knew i couldn't be the only one, we're going to be such good
+    friends
+  option1Morality: 1
+  option2Text: Why would i do that crazy
+  option2Response: You could have just said no ya know
+  option2Morality: -1
+--- !u!114 &343210526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 343210515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d246a9d29323554682862ae0c59006b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  npcID: Jenna
+  closureDialogue: I never knew that he felt this way. Thank you for telling me.
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,10 +261,11 @@ GameObject:
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
   - component: {fileID: 519420033}
-  - component: {fileID: 519420034}
   - component: {fileID: 519420035}
   - component: {fileID: 519420037}
   - component: {fileID: 519420036}
+  - component: {fileID: 519420038}
+  - component: {fileID: 519420039}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -366,19 +406,6 @@ MonoBehaviour:
   player: {fileID: 807913820}
   smoothSpeed: 0.125
   offset: {x: 0, y: 0, z: -10}
---- !u!114 &519420034
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f2f98a355277614494cbe65e76d6845, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerMorality: 0
 --- !u!114 &519420035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -420,6 +447,31 @@ MonoBehaviour:
   dialoguePanel: {fileID: 1335087076}
   speakerNameText: {fileID: 2116790780}
   dialogueText: {fileID: 1227024873}
+--- !u!114 &519420038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6d62ad291b897a4abbfb3f5112b21a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &519420039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4ff97754890a444fb5a2fd84f1b286a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMorality: 0
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -617,7 +669,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  activeQuest: {fileID: 0}
 --- !u!58 &807913817
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -966,8 +1017,9 @@ GameObject:
   - component: {fileID: 1686473926}
   - component: {fileID: 1686473928}
   - component: {fileID: 1686473929}
-  - component: {fileID: 1686473930}
   - component: {fileID: 1686473931}
+  - component: {fileID: 1686473933}
+  - component: {fileID: 1686473932}
   m_Layer: 0
   m_Name: Ghost
   m_TagString: Ghost
@@ -1058,7 +1110,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ghostName: Jeff
-  ghostQuest: {fileID: 11400000, guid: faef8a5b494423c429839b1c1b660ab6, type: 2}
 --- !u!61 &1686473929
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1105,19 +1156,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1686473930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1686473925}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b36e5d94094e8642b0f588decd874af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  quest: {fileID: 11400000, guid: faef8a5b494423c429839b1c1b660ab6, type: 2}
 --- !u!61 &1686473931
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1164,6 +1202,54 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &1686473932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1686473925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03fc0f0778f97f744bacf40d7d2200c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghostName: Jeff
+  openingLine: What do you want. Wy are you talking to me, can't you see im busy
+  option1Text: '[leave]'
+  option1Response: Thats what i thought
+  option1Morality: 1
+  option2Text: 'Screw you '
+  option2Response: Back at ya
+  option2Morality: -1
+--- !u!114 &1686473933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1686473925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc3b1f874585a3c46a21f3a843e4f302, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questType: 1
+  questOfferLine: you there, can you help me complete a ritual so i may ascend properly.
+    All i request is the heart of a living.
+  questAcceptLine: Why are you still here, get going
+  questDeclineLine: Curse you bastard
+  questIncompleteLine: Where is the item i seek
+  questCompleteLine: This will do mortal, this will do.
+  questMoralityReward: 0
+  questDeclineMorality: 3
+  requiredItemID: 
+  goodItemID: Animal_Heart
+  badItemID: Human_Heart
+  goodItemMorality: -2
+  badItemMorality: -5
+  requiredNPCID: 
+  closureNPCDialogue: 
 --- !u!1 &1724088629
 GameObject:
   m_ObjectHideFlags: 0
@@ -1177,6 +1263,8 @@ GameObject:
   - component: {fileID: 1724088632}
   - component: {fileID: 1724088633}
   - component: {fileID: 1724088634}
+  - component: {fileID: 1724088636}
+  - component: {fileID: 1724088635}
   m_Layer: 0
   m_Name: Ghost (1)
   m_TagString: Ghost
@@ -1267,7 +1355,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ghostName: Jeffery
-  ghostQuest: {fileID: 11400000, guid: 3801144cb21a5e240abc62f22afdbc8a, type: 2}
 --- !u!61 &1724088633
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1360,6 +1447,54 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &1724088635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1724088629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc3b1f874585a3c46a21f3a843e4f302, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questType: 2
+  questOfferLine: I feel i left this world too soon and didn't get to speak with
+    my daughter enoguh to tell her how i felt, can you speak to her for me?
+  questAcceptLine: Please hurry before it's too late
+  questDeclineLine: 'Oh, i see how it is. '
+  questIncompleteLine: Have you spoken to her yet?
+  questCompleteLine: Thank you so much for speaking to my daughter for me
+  questMoralityReward: 3
+  questDeclineMorality: -3
+  requiredItemID: 
+  goodItemID: 
+  badItemID: 
+  goodItemMorality: 0
+  badItemMorality: 0
+  requiredNPCID: Jenna
+  closureNPCDialogue: 
+--- !u!114 &1724088636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1724088629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03fc0f0778f97f744bacf40d7d2200c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghostName: Jeffery
+  openingLine: Hmm, interesting, you can see ghosts. Do you care to share this information?
+  option1Text: Tell them about spirit sight
+  option1Response: How facinating, i mst figure out more about this
+  option1Morality: 1
+  option2Text: Screw off
+  option2Response: Looks like someone woke on the wrong side of bed
+  option2Morality: -1
 --- !u!1 &2054831922
 GameObject:
   m_ObjectHideFlags: 0
@@ -1373,6 +1508,8 @@ GameObject:
   - component: {fileID: 2054831925}
   - component: {fileID: 2054831926}
   - component: {fileID: 2054831927}
+  - component: {fileID: 2054831929}
+  - component: {fileID: 2054831928}
   m_Layer: 0
   m_Name: Ghost (2)
   m_TagString: Ghost
@@ -1463,7 +1600,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ghostName: Geoff
-  ghostQuest: {fileID: 11400000, guid: c8f28c40b2f49eb4aa6c3998a29e6804, type: 2}
 --- !u!61 &2054831926
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1556,6 +1692,54 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &2054831928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2054831922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc3b1f874585a3c46a21f3a843e4f302, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questType: 0
+  questOfferLine: Can you help me find a locket from my past? I dropped it and i
+    can't leave without it
+  questAcceptLine: I hope to see you soon
+  questDeclineLine: I see you have better things to do
+  questIncompleteLine: Where is my locket?
+  questCompleteLine: Thank you so much for returning my locket
+  questMoralityReward: 2
+  questDeclineMorality: -2
+  requiredItemID: Locket
+  goodItemID: 
+  badItemID: 
+  goodItemMorality: 0
+  badItemMorality: 0
+  requiredNPCID: 
+  closureNPCDialogue: 
+--- !u!114 &2054831929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2054831922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03fc0f0778f97f744bacf40d7d2200c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghostName: Geoff
+  openingLine: Hello there stranger, you aren't from this town. What brings you here?
+  option1Text: To find my sister
+  option1Response: I see, i wish you success in your endeavors
+  option1Morality: 1
+  option2Text: None of your business
+  option2Response: Why so rude, i did nothing to you
+  option2Morality: -1
 --- !u!114 &2116790780 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7859863454741448630, guid: 11dda1a4f13481446b75b912ae6f39c2, type: 3}
@@ -1626,6 +1810,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2253772157131670084, guid: 3780d9a531e2aab4295ca9fb78c79070, type: 3}
       insertIndex: -1
       addedObject: {fileID: 343210520}
+    - targetCorrespondingSourceObject: {fileID: 2253772157131670084, guid: 3780d9a531e2aab4295ca9fb78c79070, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 343210525}
+    - targetCorrespondingSourceObject: {fileID: 2253772157131670084, guid: 3780d9a531e2aab4295ca9fb78c79070, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 343210526}
   m_SourcePrefab: {fileID: 100100000, guid: 3780d9a531e2aab4295ca9fb78c79070, type: 3}
 --- !u!1001 &1640419297718344911
 PrefabInstance:
@@ -1958,29 +2148,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI overlay
       objectReference: {fileID: 0}
-    - target: {fileID: 1300485342229669910, guid: 11dda1a4f13481446b75b912ae6f39c2, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+    - target: {fileID: 1425289500574887164, guid: 11dda1a4f13481446b75b912ae6f39c2, type: 3}
+      propertyPath: m_fontSize
+      value: 20
       objectReference: {fileID: 0}
-    - target: {fileID: 4180114868964658566, guid: 11dda1a4f13481446b75b912ae6f39c2, type: 3}
-      propertyPath: m_Color.a
-      value: 0.34117648
-      objectReference: {fileID: 0}
-    - target: {fileID: 4180114868964658566, guid: 11dda1a4f13481446b75b912ae6f39c2, type: 3}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4180114868964658566, guid: 11dda1a4f13481446b75b912ae6f39c2, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4180114868964658566, guid: 11dda1a4f13481446b75b912ae6f39c2, type: 3}
-      propertyPath: m_Color.r
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4250123849034694514, guid: 11dda1a4f13481446b75b912ae6f39c2, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+    - target: {fileID: 1425289500574887164, guid: 11dda1a4f13481446b75b912ae6f39c2, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4566636447773591566, guid: 11dda1a4f13481446b75b912ae6f39c2, type: 3}
       propertyPath: m_Pivot.x
@@ -2060,10 +2234,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4566636447773591566, guid: 11dda1a4f13481446b75b912ae6f39c2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8271347288734595643, guid: 11dda1a4f13481446b75b912ae6f39c2, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

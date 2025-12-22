@@ -5,27 +5,45 @@ public class MoralityManager : MonoBehaviour
 {
     public static MoralityManager Instance;
 
-    [Header("Player Morality")]
-    public int currentMorality = 0;
+    [Header("Morality Settings")]
+    public int minMorality = -100;
+    public int maxMorality = 100;
 
-    // Event that UI listens to
-    public Action<int> OnMoralityChanged;
+    [Header("Current Morality")]
+    [SerializeField] public int currentMorality = 0;
+
+    public event Action<int> OnMoralityChanged;
 
     private void Awake()
     {
         if (Instance == null)
+        {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
         else
+        {
             Destroy(gameObject);
+            return;
+        }
+    }
+
+    private void Start()
+    {
+        OnMoralityChanged?.Invoke(currentMorality);
     }
 
     public void ModifyMorality(int amount)
     {
-        currentMorality += amount;
+        currentMorality = Mathf.Clamp(
+            currentMorality + amount,
+            minMorality,
+            maxMorality
+        );
 
-        // Notify UI
         OnMoralityChanged?.Invoke(currentMorality);
-
-        Debug.Log("Morality Changed: " + currentMorality);
+        Debug.Log($"Morality Changed: {currentMorality}");
     }
+
+    public int GetMorality() => currentMorality;
 }

@@ -4,6 +4,9 @@ public class GhostQuest : MonoBehaviour
 {
     public enum QuestType { Fetch, MorallyDubious, Closure }
 
+    [Header("Quest Identity")]
+    public string questID; // UNIQUE per ghost (e.g. "Church_EvilGhost_Closure")
+
     [Header("Quest Type")]
     public QuestType questType;
 
@@ -16,7 +19,7 @@ public class GhostQuest : MonoBehaviour
 
     [Header("Quest Morality")]
     public int questMoralityReward;
-    public int questDeclineMorality;   //  NEW — morality effect for declining
+    public int questDeclineMorality;
 
     [Header("Fetch Quest")]
     public string requiredItemID;
@@ -29,62 +32,52 @@ public class GhostQuest : MonoBehaviour
 
     [Header("Closure Quest")]
     public string requiredNPCID;
-    [TextArea] public string closureNPCDialogue;
 
     private bool playerInRange;
-    private bool questAccepted;
-    private bool questCompleted;
     private bool awaitingChoice;
 
     private void Update()
     {
-        if (!playerInRange || questCompleted) return;
+        if (!playerInRange) return;
+        if (QuestManager.Instance.IsQuestCompleted(questID)) return;
 
-        // Q = Quest interaction
-        if (Input.GetKeyDown(KeyCode.Q) && !questAccepted && !awaitingChoice)
+        bool accepted = QuestManager.Instance.IsQuestAccepted(questID);
+
+        if (Input.GetKeyDown(KeyCode.Q) && !accepted && !awaitingChoice)
             OfferQuest();
 
-        if (Input.GetKeyDown(KeyCode.Q) && questAccepted)
+        else if (Input.GetKeyDown(KeyCode.Q) && accepted)
             TryCompleteQuest();
 
-        // Handle Accept / Decline
         if (awaitingChoice)
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1)) HandleChoice(1);
-            if (Input.GetKeyDown(KeyCode.Alpha2)) HandleChoice(2);
+            if (Input.GetKeyDown(KeyCode.Alpha1)) HandleChoice(true);
+            if (Input.GetKeyDown(KeyCode.Alpha2)) HandleChoice(false);
         }
     }
 
     void OfferQuest()
     {
         awaitingChoice = true;
-
         DialogueUIManager.Instance.Show(
             "Ghost",
             questOfferLine + "\n[1] Accept\n[2] Decline"
         );
     }
 
-    void HandleChoice(int choice)
+    void HandleChoice(bool accepted)
     {
-        if (!awaitingChoice) return;
         awaitingChoice = false;
 
-        if (choice == 1)
+        if (accepted)
         {
-            questAccepted = true;
-
-            //  Accept feedback
+            QuestManager.Instance.AcceptQuest(questID);
             DialogueUIManager.Instance.Show("Ghost", questAcceptLine);
-
-            //  UPDATE PROMPT AFTER ACCEPTING
             WorldPromptUI.Instance.Show("Press Q to Return Quest | Press E to Talk", transform);
         }
         else
         {
-            //  APPLY DECLINE MORALITY
             MoralityManager.Instance.ModifyMorality(questDeclineMorality);
-
             DialogueUIManager.Instance.Show("Ghost", questDeclineLine);
         }
     }
@@ -100,9 +93,7 @@ public class GhostQuest : MonoBehaviour
                     CompleteQuest(questMoralityReward);
                 }
                 else
-                {
                     DialogueUIManager.Instance.Show("Ghost", questIncompleteLine);
-                }
                 break;
 
             case QuestType.MorallyDubious:
@@ -117,27 +108,21 @@ public class GhostQuest : MonoBehaviour
                     CompleteQuest(badItemMorality);
                 }
                 else
-                {
                     DialogueUIManager.Instance.Show("Ghost", questIncompleteLine);
-                }
                 break;
 
             case QuestType.Closure:
                 if (QuestManager.Instance.HasSpokenTo(requiredNPCID))
-                {
                     CompleteQuest(questMoralityReward);
-                }
                 else
-                {
                     DialogueUIManager.Instance.Show("Ghost", questIncompleteLine);
-                }
                 break;
         }
     }
 
     void CompleteQuest(int morality)
     {
-        questCompleted = true;
+        QuestManager.Instance.CompleteQuest(questID);
         MoralityManager.Instance.ModifyMorality(morality);
         DialogueUIManager.Instance.Show("Ghost", questCompleteLine);
     }
@@ -145,14 +130,15 @@ public class GhostQuest : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
-
         playerInRange = true;
 
-        //  Dynamic prompt based on quest state
-        if (!questAccepted)
-            WorldPromptUI.Instance.Show("Press Q for Quest | Press E to Talk", transform);
-        else
-            WorldPromptUI.Instance.Show("Press Q to Return Quest | Press E to Talk", transform);
+        bool accepted = QuestManager.Instance.IsQuestAccepted(questID);
+
+        WorldPromptUI.Instance.Show(
+            accepted ? "Press Q to Return Quest | Press E to Talk"
+                     : "Press Q for Quest | Press E to Talk",
+            transform
+        );
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -161,8 +147,6 @@ public class GhostQuest : MonoBehaviour
 
         playerInRange = false;
         awaitingChoice = false;
-
-        //  Clears dialogue when walking away
         DialogueUIManager.Instance.Hide();
         WorldPromptUI.Instance.Hide();
     }

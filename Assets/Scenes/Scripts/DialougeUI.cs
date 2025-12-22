@@ -14,35 +14,47 @@ public class DialogueUIManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
 
-        dialoguePanel.SetActive(false);
+        if (dialoguePanel != null)
+            dialoguePanel.SetActive(false);
+
         IsDialogueActive = false;
         InputBlocked = false;
     }
 
-    // -----------------------------
-    // SINGLE CLEAN SHOW FUNCTION
-    // -----------------------------
+    /// <summary>
+    /// Show dialogue
+    /// </summary>
     public void Show(string speakerName, string text, bool blockInput = true)
     {
+        if (dialoguePanel == null || speakerNameText == null || dialogueText == null) return;
+
         dialoguePanel.SetActive(true);
         IsDialogueActive = true;
 
-        if (speakerNameText) speakerNameText.text = speakerName;
-        if (dialogueText) dialogueText.text = text;
+        speakerNameText.text = speakerName;
+        dialogueText.text = text;
 
-        if (blockInput)
-            InputBlocked = true;
+        InputBlocked = blockInput;
     }
 
-    // -----------------------------
-    // SINGLE CLEAN HIDE FUNCTION
-    // -----------------------------
+    /// <summary>
+    /// Hide dialogue
+    /// </summary>
     public void Hide()
     {
-        dialoguePanel.SetActive(false);
+        if (dialoguePanel != null)
+            dialoguePanel.SetActive(false);
 
         IsDialogueActive = false;
         InputBlocked = false;

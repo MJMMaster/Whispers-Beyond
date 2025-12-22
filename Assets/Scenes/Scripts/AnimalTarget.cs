@@ -24,7 +24,7 @@ public class AnimalTarget : MonoBehaviour
         DialogueUIManager.Instance.Show("Player", "You killed an animal.");
 
         GameObject droppedHeart = Instantiate(heartPrefab, dropPoint.position, Quaternion.identity);
-        droppedHeart.GetComponent<HeartPickUp>().heartID = heartID;
+        droppedHeart.GetComponent<PickupItem>().itemID = heartID;
 
         Destroy(gameObject);
     }
